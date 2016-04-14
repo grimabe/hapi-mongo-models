@@ -25,7 +25,7 @@ exports.register = function (server, options, next) {
 
         let modelPath = models[key].path;
         var md = require(modelPath);
-        md.connection = models[key].connection;
+        md.connectionName = models[key].connection;
 
         if (modelPath !== Path.resolve(modelPath)) {
             modelPath = Path.join(process.cwd(), modelPath);
