@@ -23,13 +23,15 @@ exports.register = function (server, options, next) {
 
     Object.keys(models).forEach((key) => {
 
-        let modelPath = models[key];
+        let modelPath = models[key].path;
+        var md = require(modelPath);
+        md.connection = models[key].connection;
 
         if (modelPath !== Path.resolve(modelPath)) {
             modelPath = Path.join(process.cwd(), modelPath);
         }
+        addModel(key, md);
 
-        addModel(key, require(modelPath));
     });
 
     server.expose('addModel', addModel);
